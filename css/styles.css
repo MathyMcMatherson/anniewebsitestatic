@@ -12,6 +12,7 @@ main {
   display: grid;
   min-height: 70%;
   grid-template-rows: 1fr 3fr 3fr;
+  grid-row-gap: 10px;
 }
 
 #titleRow {
@@ -57,4 +58,23 @@ main {
 
 #cardsRow {
   grid-row: 3 / span 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+#card1 {
+  border: solid 1px black;
+  grid-column: 1 / span 1;
+  
+}
+
+#card2 {
+  border: solid 1px black;
+  grid-column: 2 / span 1;
+}
+
+#card3 {
+  border: solid 1px black;
+  grid-column: 3 / span 1;
+
 }
