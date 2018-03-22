@@ -113,7 +113,7 @@ taken from https://google.github.io/material-design-icons/ */
 
 #chatContainer {
   display: grid;
-  grid-template-columns: 1fr 4fr 2fr;
+  grid-template-columns: 10% 4fr 1fr;
   grid-template-rows: 10% auto;
   grid-column-gap: 10px;
   padding-left: 10px;
@@ -128,6 +128,7 @@ taken from https://google.github.io/material-design-icons/ */
 .message {
   padding: 5px;
   margin-top: 5px;
+  font-size: larger;
 }
 
 .message.annie {

@@ -31,6 +31,24 @@ const moodResponses = [
   "Oh wow - you're super sad. Maybe you should talk to a therapist instead of a dog on the internet?"
 ]
 
+const annieImages = {
+  'space': 'images/annie2.jpg',
+  'happy1': 'images/annie3.jpg',
+  'startled': 'images/annie4.jpg',
+  'bored1': 'images/annie6.jpg',
+  'bored2': 'images/annie7.jpg',
+  'staring1': 'images/annie10.jpg',
+  'neutral1': 'images/annie13.jpg',
+  'closetocamera': 'images/annie17.jpg',
+  'happy2': 'images/annie19.jpg',
+  'neutral2': 'images/annie1.jpg'
+}
+
+function setAnniePicture(mood) {
+  let picObj = document.querySelector("#anniePic");
+  picObj.src = annieImages[mood];
+}
+
 
 function setupMoodButtons() {
   for(let i = 0; i < 5; i++) {
@@ -153,7 +171,7 @@ $(document).ready(function() {
         handleChatForm(e);
       }
   });
-
+  setAnniePicture('neutral1');
   addMessage("annie", "HI I'M ANNIE WHO ARE YOU?!?!");
 
 
