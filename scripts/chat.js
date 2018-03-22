@@ -23,6 +23,14 @@ let messages = [
   }
 ];
 
+const moodResponses = [
+  "YOU'RE HAPPY?!?!? I'M HAPPY TOOO!!! I feed off other people's emotions",
+  "I MADE YOU SMILE! HA!",
+  "I can't read your facial expression. You're boring. I'm gonna take a nap",
+  "WHY YOU SAD?!?! LET ME CHEER YOU UP!",
+  "Oh wow - you're super sad. Maybe you should talk to a therapist instead of a dog on the internet?"
+]
+
 
 function setupMoodButtons() {
   for(let i = 0; i < 5; i++) {
@@ -36,6 +44,9 @@ function setupMoodButtons() {
             oldMoodBtn.classList.remove('icon-selected');
             oldMoodBtn.classList.add('icon-unselected');
             currentMood = i;
+
+            addMessage("annie", moodResponses[i]);
+
           }
       });
   }
