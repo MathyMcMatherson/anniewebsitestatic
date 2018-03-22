@@ -8,6 +8,10 @@ main {
   flex: 1 0 auto;
 }
 
+.bolded {
+  font-weight: bold;
+}
+
 #indexContainer {
   display: grid;
   grid-template-rows: auto auto auto auto;
