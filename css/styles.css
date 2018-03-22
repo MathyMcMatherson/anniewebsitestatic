@@ -12,6 +12,8 @@ main {
   font-weight: bold;
 }
 
+/* START Index.html elements */
+
 #indexContainer {
   display: grid;
   grid-template-rows: auto auto auto auto;
@@ -83,3 +85,17 @@ main {
   grid-column: 3 / span 1;
 
 }
+
+/* END index.html elements */
+
+/* START chat.html elements */
+
+#chatContainer {
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr;
+  grid-template-rows: 1fr 3fr;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* END chat.html elements */
