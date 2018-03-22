@@ -57,29 +57,29 @@ function annieResponse(playerMessage) {
   annieMessage = "";
 
   if(playerMessage.includes("walk")) {
-    annieMessage = "DID YOU SAY WALK?!?! Let's go on a walk! RIGHT NOW!";
+    annieMessage = `DID YOU SAY WALK?!?! Let's go on a walk${(playerName.length != 0 ? " " + playerName : "")}! RIGHT NOW!`;
   }
   if(playerMessage.includes("park")) {
-    annieMessage = "DID YOU SAY PARK?!?! Let's go to the park! RIGHT NOW!";
+    annieMessage = `DID YOU SAY PARK?!?! Let's go to the park${(playerName.length != 0 ? " " + playerName : "")}! RIGHT NOW!`;
   }
   if(playerMessage.includes("food")) {
-    annieMessage = `Food? Where? I want some. Give me food ${(name.length != 0 ? name : "")}!`;
+    annieMessage = `Food? Where? I want some. Give me food${(playerName.length != 0 ? " " + playerName : "")}!`;
   }
   if(playerMessage.includes("?")) {
-    annieMessage = "I know you asked me a question but I'm just going to ignore it and stare at you because I'm a dumb dog";
+    annieMessage = "I know you asked me a question but I'm just going to ignore it and stare at you because I'm a dumb dog. Like really, why would you assume I can understand complex sentence structures like questions?";
   }
   if(playerMessage.includes("i like")) {
       let temp = playerMessage.split("i like ")[1].split(" ")[0];
-      annieMessage = `WHOA! I like ${temp} too! Since we have something in common, PET ME!`;
+      annieMessage = `WHOA! I like ${temp} too! Since we have something in common, PET ME${(playerName.length != 0 ? " " + playerName : "")}!`;
   }
   if(playerMessage.includes("i hate")) {
       let temp = playerMessage.split("i hate ")[1].split(" ")[0];
-      annieMessage = `Yah I hate ${temp} too! Since we have something in common, PET ME!`;
+      annieMessage = `Yah I hate ${temp} too! Since we have something in common, PET ME${(playerName.length != 0 ? " " + playerName : "")}!`;
   }
   if(playerMessage.includes("my name is")) {
       let temp = playerMessage.split("my name is ")[1].split(" ")[0];
-      name = temp;
-      annieMessage = `Hi ${name}! Let's talk. Talk talk talk. I'm a dog.`;
+      playerName = temp.toUpperCase();
+      annieMessage = `Hi ${playerName}! Let's talk. Talk talk talk. I'm a dog.`;
   }
 
 
@@ -88,13 +88,13 @@ function annieResponse(playerMessage) {
     if(rand == 0) {
         annieMessage = "I'm bored. You're boring. I'm gonna wait for someone else to talk to";
     } else if (rand == 1) {
-        annieMessage = "WAIT.... Did you hear that?! I heard something...";
+        annieMessage = `WAIT.... Did you hear that?! I heard something... Don't worry, I'll protect you${(playerName.length != 0 ? " " + playerName : "")}...`;
     } else if (rand == 2) {
         annieMessage = "I IGNORED WHAT YOU SAID BECAUSE I'M EXCITED YOU'RE HERE";
     } else if (rand == 3) {
         annieMessage = "I'M A SPACE DOG!";
     } else if (rand == 4) {
-        annieMessage = "That's a very informed and intellectual thought that I don't understand because I'm just a dumb dog";
+        annieMessage = `${(playerName.length != 0 ? playerName + ": " : "")}That is a very informed and intellectual thought that I don't understand because I'm just a dumb dog`;
     }
   }
 
@@ -128,10 +128,19 @@ function setMessages() {
 $(document).ready(function() {
   setupMoodButtons();
 
+  /*
   let chatForm = document.querySelector("#chatForm");
   chatForm.addEventListener('submit', e => {
     e.preventDefault();
-    handleChatForm(e);
+
+  });
+  */
+
+  let playerMessageInput = document.querySelector("#playerMessage");
+  playerMessageInput.addEventListener('keypress', e => {
+      if(e.key == "Enter") {
+        handleChatForm(e);
+      }
   });
 
   addMessage("annie", "HI I'M ANNIE WHO ARE YOU?!?!");
