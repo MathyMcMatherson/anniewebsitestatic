@@ -29,31 +29,31 @@ main {
 #collage1 {
   border: solid 1px black;
   grid-row: 1 / span 3;
-  grid-column: 1 / span 5;
+  grid-column: 1 / span 4;
 }
 
 #collage2 {
   border: solid 1px black;
-  grid-row: 1 / span 2;
-  grid-column: 6 / span 3;
+  grid-row: 1 / span 5;
+  grid-column: 5 / span 2;
 }
 
 #collage3 {
   border: solid 1px black;
   grid-row: 4 / span 2;
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 2;
 }
 
 #collage4 {
   border: solid 1px black;
   grid-row: 4 / span 2;
-  grid-column: 4 / span 2;
+  grid-column: 3 / span 2;
 }
 
 #collage5 {
   border: solid 1px black;
-  grid-row: 3 / span 3;
-  grid-column: 6 / span 3;
+  grid-row: 1 / span 5;
+  grid-column: 7 / span 2;
 }
 
 #cardsRow {
@@ -65,7 +65,7 @@ main {
 #card1 {
   border: solid 1px black;
   grid-column: 1 / span 1;
-  
+
 }
 
 #card2 {
