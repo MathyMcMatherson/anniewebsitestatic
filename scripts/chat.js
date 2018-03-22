@@ -51,6 +51,37 @@ function addMessage(owner, message) {
   setMessages();
 }
 
+function annieResponse(playerMessage) {
+  playerMessage = playerMessage.toLowerCase();
+  annieMessage = "I'm bored. You're boring. I'm gonna wait for someone else to talk to";
+
+  if(playerMessage.includes("walk")) {
+    annieMessage = "DID YOU SAY WALK?!?! Let's go on a walk! RIGHT NOW!";
+  }
+  if(playerMessage.includes("park")) {
+    annieMessage = "DID YOU SAY PARK?!?! Let's go to the park! RIGHT NOW!";
+  }
+  if(playerMessage.includes("food")) {
+    annieMessage = "Food? Where? I want some. Give me food.";
+  }
+  if(playerMessage.includes("?")) {
+    annieMessage = "I know you asked me a question but I'm just going to ignore it and stare at you because I'm a dumb dog";
+  }
+  if(playerMessage.includes("i like")) {
+      let temp = playerMessage.split("i like ")[1].split(" ")[0];
+      console.log(temp);
+      annieMessage = `WHOA! I like ${temp} too! Since we have something in common, PET ME!`;
+  }
+  if(playerMessage.includes("i hate")) {
+      let temp = playerMessage.split("i hate ")[1].split(" ")[0];
+      console.log(temp);
+      annieMessage = `Yah I hate ${temp} too! Since we have something in common, PET ME!`;
+  }
+
+  addMessage("annie", annieMessage);
+
+}
+
 
 function handleChatForm(e) {
   let playerInput = document.querySelector("#playerMessage");
@@ -58,6 +89,7 @@ function handleChatForm(e) {
 
   addMessage("player", playerMessage);
   playerInput.value = "";
+  setTimeout(() => annieResponse(playerMessage), 300);
 }
 
 function setMessages() {
