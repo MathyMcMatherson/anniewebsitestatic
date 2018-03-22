@@ -11,7 +11,7 @@ main {
 #indexContainer {
   display: grid;
   min-height: 70%;
-  grid-template-rows: 1fr 2fr 2fr;
+  grid-template-rows: 1fr 3fr 3fr;
 }
 
 #titleRow {
@@ -20,6 +20,39 @@ main {
 
 #collageRow {
   grid-row: 2 / span 1;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(8, 1fr);
+}
+
+#collage1 {
+  border: solid 1px black;
+  grid-row: 1 / span 3;
+  grid-column: 1 / span 5;
+}
+
+#collage2 {
+  border: solid 1px black;
+  grid-row: 1 / span 2;
+  grid-column: 6 / span 3;
+}
+
+#collage3 {
+  border: solid 1px black;
+  grid-row: 4 / span 2;
+  grid-column: 1 / span 3;
+}
+
+#collage4 {
+  border: solid 1px black;
+  grid-row: 4 / span 2;
+  grid-column: 4 / span 2;
+}
+
+#collage5 {
+  border: solid 1px black;
+  grid-row: 3 / span 3;
+  grid-column: 6 / span 3;
 }
 
 #cardsRow {
