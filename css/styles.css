@@ -1,3 +1,5 @@
+/* START makes the footer stay on bottom of screen
+Taken from materialcss.com notes */
 body {
   display: flex;
   min-height: 100vh;
@@ -7,6 +9,25 @@ body {
 main {
   flex: 1 0 auto;
 }
+
+/*END footer on bottom */
+
+/*START Material icon CSS
+taken from https://google.github.io/material-design-icons/ */
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-60 { font-size: 60px; }
+
+/* Custom colors */
+.material-icons.icon-selected { color: #2196f3; }
+.material-icons.icon-unselected { color: #000000; }
+
+/*END material icon CSS */
+
 
 .bolded {
   font-weight: bold;
@@ -93,7 +114,7 @@ main {
 #chatContainer {
   display: grid;
   grid-template-columns: 1fr 4fr 2fr;
-  grid-template-rows: 1fr 3fr;
+  grid-template-rows: 10% auto;
   padding-left: 10px;
   padding-right: 10px;
 }

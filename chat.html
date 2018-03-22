@@ -8,7 +8,6 @@
 <!-- JS -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="scripts/scripts.js"></script>
 
 
 </head>
@@ -42,7 +41,29 @@
 		</div>
 
 		<div id="myMoodBox">
-			Clickable Icons
+			<ul>
+				<li>
+					<a class="waves-effect">
+						<i class="material-icons md-60 icon-unselected" id="myMood0">sentiment_very_satisfied</i>
+					</a>
+				</li>
+				<li>
+					<a class="waves-effect">
+						<i class="material-icons md-60 icon-unselected" id="myMood1">sentiment_satisfied</i></li>
+					</a>
+				<li>
+					<a class="waves-effect">
+						<i class="material-icons md-60 icon-selected" id="myMood2">sentiment_neutral</i></li>
+					</a>
+				<li>
+					<a class="waves-effect">
+						<i class="material-icons md-60 icon-unselected" id="myMood3">sentiment_dissatisfied</i></li>
+					</a>
+				<li>
+					<a class="waves-effect">
+						<i class="material-icons md-60 icon-unselected" id="myMood4">sentiment_very_dissatisfied</i></li>
+					</a>
+			</ul>
 		</div>
 		<div id="chatBox">
 			Chat Box with Annie
@@ -72,6 +93,8 @@
 	    </div>
 	  </div>
 	</footer>
+
+<script type="text/javascript" src="scripts/chat.js"></script>
 
 </body>
 </html>
