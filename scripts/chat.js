@@ -82,5 +82,7 @@ $(document).ready(function() {
     handleChatForm(e);
   });
 
+  addMessage("annie", "HI I'M ANNIE WHO ARE YOU?!?!");
+
 
 });
