@@ -7,3 +7,21 @@ body {
 main {
   flex: 1 0 auto;
 }
+
+#indexContainer {
+  display: grid;
+  min-height: 70%;
+  grid-template-rows: 1fr 2fr 2fr;
+}
+
+#titleRow {
+  grid-row: 1 / span 1;
+}
+
+#collageRow {
+  grid-row: 2 / span 1;
+}
+
+#cardsRow {
+  grid-row: 3 / span 1;
+}
