@@ -24,11 +24,26 @@ let messages = [
 ];
 
 const moodResponses = [
-  "YOU'RE HAPPY?!?!? I'M HAPPY TOOO!!! I feed off other people's emotions",
-  "I MADE YOU SMILE! HA!",
-  "I can't read your facial expression. You're boring. I'm gonna take a nap",
-  "WHY YOU SAD?!?! LET ME CHEER YOU UP!",
-  "Oh wow - you're super sad. Maybe you should talk to a therapist instead of a dog on the internet?"
+  {
+      message: "YOU'RE HAPPY?!?!? I'M HAPPY TOOO!!! I feed off other people's emotions",
+      image: 'happy1'
+  },
+  {
+      message: "I MADE YOU SMILE! HA!",
+      image: 'happy2'
+  },
+  {
+      message: "I can't read your facial expression. You're boring. I'm gonna take a nap",
+      image: 'neutral1'
+  },
+  {
+      message: "WHY YOU SAD?!?! LET ME CHEER YOU UP!",
+      image: 'happy1'
+  },
+  {
+      message: "Oh wow - you're super sad. Maybe you should talk to a therapist instead of a dog on the internet?",
+      image: 'staring1'
+  }
 ]
 
 const annieImages = {
@@ -41,7 +56,8 @@ const annieImages = {
   'neutral1': 'images/annie13.jpg',
   'closetocamera': 'images/annie17.jpg',
   'happy2': 'images/annie19.jpg',
-  'neutral2': 'images/annie1.jpg'
+  'neutral2': 'images/annie1.jpg',
+  'walk': 'images/annie8.jpg'
 }
 
 function setAnniePicture(mood) {
@@ -63,7 +79,8 @@ function setupMoodButtons() {
             oldMoodBtn.classList.add('icon-unselected');
             currentMood = i;
 
-            addMessage("annie", moodResponses[i]);
+            addMessage("annie", moodResponses[i].message);
+            setAnniePicture(moodResponses[i].image);
 
           }
       });
@@ -84,31 +101,39 @@ function addMessage(owner, message) {
 function annieResponse(playerMessage) {
   playerMessage = playerMessage.toLowerCase();
   annieMessage = "";
+  annieMood = "neutral1";
 
   if(playerMessage.includes("walk")) {
     annieMessage = `DID YOU SAY WALK?!?! Let's go on a walk${(playerName.length != 0 ? " " + playerName : "")}! RIGHT NOW!`;
+    annieMood ='walk';
   }
   if(playerMessage.includes("park")) {
     annieMessage = `DID YOU SAY PARK?!?! Let's go to the park${(playerName.length != 0 ? " " + playerName : "")}! RIGHT NOW!`;
+    annieMood ='walk';
   }
   if(playerMessage.includes("food")) {
     annieMessage = `Food? Where? I want some. Give me food${(playerName.length != 0 ? " " + playerName : "")}!`;
+    annieMood ='neutral2';
   }
   if(playerMessage.includes("?")) {
     annieMessage = "I know you asked me a question but I'm just going to ignore it and stare at you because I'm a dumb dog. Like really, why would you assume I can understand complex sentence structures like questions?";
+    annieMood ='staring1';
   }
   if(playerMessage.includes("i like")) {
       let temp = playerMessage.split("i like ")[1].split(" ")[0];
       annieMessage = `WHOA! I like ${temp} too! Since we have something in common, PET ME${(playerName.length != 0 ? " " + playerName : "")}!`;
+      annieMood ='closetocamera';
   }
   if(playerMessage.includes("i hate")) {
       let temp = playerMessage.split("i hate ")[1].split(" ")[0];
       annieMessage = `Yah I hate ${temp} too! Since we have something in common, PET ME${(playerName.length != 0 ? " " + playerName : "")}!`;
+      annieMood ='neutral1';
   }
   if(playerMessage.includes("my name is")) {
       let temp = playerMessage.split("my name is ")[1].split(" ")[0];
       playerName = temp.toUpperCase();
       annieMessage = `Hi ${playerName}! Let's talk. Talk talk talk. I'm a dog.`;
+      annieMood ='neutral1';
   }
 
 
@@ -116,18 +141,24 @@ function annieResponse(playerMessage) {
     let rand = Math.floor(Math.random() * 5);
     if(rand == 0) {
         annieMessage = "I'm bored. You're boring. I'm gonna wait for someone else to talk to";
+        annieMood ='bored1';
     } else if (rand == 1) {
         annieMessage = `WAIT.... Did you hear that?! I heard something... Don't worry, I'll protect you${(playerName.length != 0 ? " " + playerName : "")}...`;
+        annieMood ='startled';
     } else if (rand == 2) {
         annieMessage = "I IGNORED WHAT YOU SAID BECAUSE I'M EXCITED YOU'RE HERE";
+        annieMood ='happy2';
     } else if (rand == 3) {
         annieMessage = "I'M A SPACE DOG!";
+        annieMood ='space';
     } else if (rand == 4) {
         annieMessage = `${(playerName.length != 0 ? playerName + ": " : "")}That is a very informed and intellectual thought that I don't understand because I'm just a dumb dog`;
+        annieMood ='bored2';
     }
   }
 
   addMessage("annie", annieMessage);
+  setAnniePicture(annieMood);
 
 }
 
