@@ -115,8 +115,28 @@ taken from https://google.github.io/material-design-icons/ */
   display: grid;
   grid-template-columns: 1fr 4fr 2fr;
   grid-template-rows: 10% auto;
+  grid-column-gap: 10px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+#chatBox {
+  display: grid;
+  grid-template-rows: auto auto auto auto auto auto;
+}
+
+.message {
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.message.annie {
+  background-color: #80deea;
+  text-align: right;
+}
+
+.message.player {
+  background-color: #80cbc4;
 }
 
 /* END chat.html elements */
