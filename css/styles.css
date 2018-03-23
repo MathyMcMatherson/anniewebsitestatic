@@ -154,6 +154,8 @@ taken from https://google.github.io/material-design-icons/ */
   grid-template-rows: auto;
   min-height: 70%;
   grid-column-gap: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 #mapLocations {

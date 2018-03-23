@@ -45,23 +45,11 @@ function initMap() {
   */
 }
 
-function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-  directionsService.route({
-    origin: document.getElementById('start').value,
-    destination: document.getElementById('end').value,
-    travelMode: 'DRIVING'
-  }, function(response, status) {
-    if (status === 'OK') {
-      directionsDisplay.setDirections(response);
-    } else {
-      window.alert('Directions request failed due to ' + status);
-    }
-  });
-}
 
 function eventHandlers() {
+  let btnDOM;
   for(let loc in LOCATIONS) {
-    let btnDOM = document.querySelector("#" + loc + "Btn");
+    btnDOM = document.querySelector("#" + loc + "Btn");
     btnDOM.addEventListener('click', (e) => {
       if(curMarker != null) {
         curMarker.setMap(null);
@@ -75,6 +63,52 @@ function eventHandlers() {
 
     });
   }
+  btnDOM = document.querySelector("#directionsBtn");
+  btnDOM.addEventListener('click', (e) => {
+      findDirections();
+  });
+}
+
+function findDirections() {
+
+  /*Stolen from: https://developers.google.com/maps/documentation/javascript/geolocation */
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      //success
+      let pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      if(curMarker == null) {
+        alert("Error - pick a place to take me for a walk first!");
+      } else {
+          calculateAndDisplayRoute(pos, curMarker.getPosition());
+      }
+
+    }, function() {
+      //error
+      alert("Error - don't have permission to access your location");
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    alert("Error - your browser doesn't support looking at your location");
+  }
+}
+
+/*Stolen from: https://developers.google.com/maps/documentation/javascript/examples/directions-simple */
+function calculateAndDisplayRoute(start, end) {
+  directionsService.route({
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+      //console.log(response.routes[0].legs[0].duration.text);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
 }
 
 $(document).ready(function() {
