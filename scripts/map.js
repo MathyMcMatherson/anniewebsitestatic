@@ -3,6 +3,7 @@ let curMarker = null;
 let map = null;
 let directionsService = null;
 let directionsDisplay = null;
+let annieMsgDOM = null;
 
 const LOCATIONS = {
   'riverPark': {
@@ -67,6 +68,9 @@ function eventHandlers() {
   btnDOM.addEventListener('click', (e) => {
       findDirections();
   });
+
+  annieMsgDOM = document.querySelector("#annieMsg");
+
 }
 
 function findDirections() {
@@ -80,18 +84,22 @@ function findDirections() {
         lng: position.coords.longitude
       };
       if(curMarker == null) {
-        alert("Error - pick a place to take me for a walk first!");
+        annieMsgDOM.innerHTML = "Pick a place to take me for a walk first!";
       } else {
           calculateAndDisplayRoute(pos, curMarker.getPosition());
       }
 
     }, function() {
       //error
-      alert("Error - don't have permission to access your location");
+      annieMsgDOM.classList.remove('msgSuccess');
+      annieMsgDOM.classList.add('msgError');
+      annieMsgDOM.innerHTML = "Oh No! I don't have permission to access your location";
     });
   } else {
     // Browser doesn't support Geolocation
-    alert("Error - your browser doesn't support looking at your location");
+    annieMsgDOM.classList.remove('msgSuccess');
+    annieMsgDOM.classList.add('msgError');
+    annieMsgDOM.innerHTML = "Oh No! Your browser doesn't support looking at your location";
   }
 }
 
@@ -104,9 +112,14 @@ function calculateAndDisplayRoute(start, end) {
   }, function(response, status) {
     if (status === 'OK') {
       directionsDisplay.setDirections(response);
-      //console.log(response.routes[0].legs[0].duration.text);
+      let duration = response.routes[0].legs[0].duration.text;
+      annieMsgDOM.classList.remove('msgError');
+      annieMsgDOM.classList.add('msgSuccess');
+      annieMsgDOM.innerHTML = `YAH! Only ${duration} minutes until we're walking!`;
     } else {
-      window.alert('Directions request failed due to ' + status);
+      annieMsgDOM.classList.remove('msgSuccess');
+      annieMsgDOM.classList.add('msgError');
+      annieMsgDOM.innerHTML = 'Oh No! Something went wrong =/';
     }
   });
 }
