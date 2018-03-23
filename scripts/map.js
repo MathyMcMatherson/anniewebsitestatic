@@ -1,5 +1,19 @@
 const MAPS_API_KEY = "AIzaSyB-0I6OiHS71DRPUE6FVMlkM9TgmmTFPlc";
 
+const LOCATIONS = {
+  'riverPark': {
+    lat:32.276990, lng:-110.904667
+  },
+  'himmel': {
+    lat:32.233915, lng:-110.933457
+  },
+  'uofa': {
+    lat:32.231943, lng:-110.945554
+  },
+  'hopshop': {
+    lat:32.266126, lng:-110.913664
+  }
+}
 
 function initMap() {
   var directionsService = new google.maps.DirectionsService;
@@ -9,6 +23,15 @@ function initMap() {
     center: {lat: 32.22, lng: -110.93}
   });
   directionsDisplay.setMap(map);
+  /*
+  for(let key in LOCATIONS) {
+    var marker = new google.maps.Marker({
+      position: LOCATIONS[key],
+      map: map
+    });
+  }
+  */
+
   /*
   var onChangeHandler = function() {
     calculateAndDisplayRoute(directionsService, directionsDisplay);
