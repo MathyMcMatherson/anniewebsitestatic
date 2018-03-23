@@ -33,6 +33,10 @@ taken from https://google.github.io/material-design-icons/ */
   font-weight: bold;
 }
 
+.max-width {
+  width: 100%;
+}
+
 /* START Index.html elements */
 
 #indexContainer {
@@ -146,16 +150,19 @@ taken from https://google.github.io/material-design-icons/ */
 
 #mapContainer {
   display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: 10% 400px;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: auto;
+  min-height: 70%;
+  grid-column-gap: 10px;
 }
 
-#mapTitle {
-  grid-row: 1 / span 1;
+#mapLocations {
+  grid-column: 1 / span 1;
 }
 
 #map {
-  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  min-height: 70%;
 }
 
 /*END map.html elements */

@@ -1,4 +1,8 @@
 const MAPS_API_KEY = "AIzaSyB-0I6OiHS71DRPUE6FVMlkM9TgmmTFPlc";
+let curMarker = null;
+let map = null;
+let directionsService = null;
+let directionsDisplay = null;
 
 const LOCATIONS = {
   'riverPark': {
@@ -16,9 +20,9 @@ const LOCATIONS = {
 }
 
 function initMap() {
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  var map = new google.maps.Map(document.getElementById('map'), {
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: {lat: 32.22, lng: -110.93}
   });
@@ -54,3 +58,25 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     }
   });
 }
+
+function eventHandlers() {
+  for(let loc in LOCATIONS) {
+    let btnDOM = document.querySelector("#" + loc + "Btn");
+    btnDOM.addEventListener('click', (e) => {
+      if(curMarker != null) {
+        curMarker.setMap(null);
+      }
+      curMarker = new google.maps.Marker({
+        position: LOCATIONS[loc],
+        map: map
+      });
+      map.setZoom(14);
+      map.setCenter(curMarker.getPosition());
+
+    });
+  }
+}
+
+$(document).ready(function() {
+  eventHandlers();
+});
