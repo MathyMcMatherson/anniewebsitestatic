@@ -8,7 +8,7 @@
 <!-- JS -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="scripts/gallery.js"></script>
+<script type="text/javascript" src="scripts/map.js"></script>
 
 
 </head>
@@ -29,10 +29,15 @@
 	</div>
 </nav>
 
-<main>
-	<div class="container">
-		<h1>Gallery</h1>
-	</div>
+<main class="container" id="mapContainer">
+		<div id="mapTitle">
+			<h1>Map!</h1>
+		</div>
+
+		<div id="map">
+			<!-- Filled in w/Javascript -->
+		</div>
+
 </main>
 
 <footer class="page-footer">
@@ -53,6 +58,8 @@
 	    </div>
 	  </div>
 	</footer>
-
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-0I6OiHS71DRPUE6FVMlkM9TgmmTFPlc&callback=initMap">
+	</script>
 </body>
 </html>
