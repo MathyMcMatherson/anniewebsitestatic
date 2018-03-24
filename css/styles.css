@@ -185,3 +185,10 @@ taken from https://google.github.io/material-design-icons/ */
 }
 
 /*END map.html elements */
+
+/*START game.html elements */
+#gameContainer {
+  border: solid 1px black;
+}
+
+/*END game.html elements */
