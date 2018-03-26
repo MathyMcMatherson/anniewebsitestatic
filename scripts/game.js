@@ -1,5 +1,8 @@
 const MOVEDIST = 10;
+const WIDTH = 800;
+const HEIGHT = 450;
 let ALLOBJECTS = [];
+let annie;
 
 class Annie {
   constructor() {
@@ -31,16 +34,35 @@ class Annie {
 
 }
 
+function annieMovement() {
+  if(keyIsDown(LEFT_ARROW)) {
+      annie.moveLeft();
+  }
+
+  if(keyIsDown(RIGHT_ARROW)) {
+      annie.moveRight();
+  }
+
+  if(keyIsDown(UP_ARROW)) {
+      annie.moveUp();
+  }
+
+  if(keyIsDown(DOWN_ARROW)) {
+      annie.moveDown();
+  }
+}
+
 function setup() {
-  let myCanvas = createCanvas(600, 400);
+  let myCanvas = createCanvas(WIDTH, HEIGHT);
   myCanvas.parent('gameContainer');
-  let annie = new Annie();
+  annie = new Annie();
   ALLOBJECTS.push(annie);
 }
 
 function draw() {
   background(255, 255, 255);
 
+  annieMovement();
 
   for(let obj of ALLOBJECTS) {
     obj.render();
