@@ -3,6 +3,26 @@ const WIDTH = 800;
 const HEIGHT = 450;
 let ALLOBJECTS = [];
 let annie;
+let dirt;
+
+function randInclusive(a, b) {
+  return Math.floor(Math.random() * (b-a + 1)) + a;
+}
+
+class Dirtpile {
+  constructor() {
+    this.width = 30;
+    this.height = 30;
+    this.x = randInclusive(0, WIDTH-30);
+    this.y = randInclusive(0,HEIGHT-30);
+  }
+
+  render() {
+    fill('brown');
+    rect(this.x, this.y, this.width, this.height);
+  }
+
+}
 
 class Annie {
   constructor() {
@@ -13,6 +33,7 @@ class Annie {
   }
 
   render() {
+    fill('white');
     ellipse(this.x, this.y, this.width, this.height);
   }
 
@@ -52,17 +73,24 @@ function annieMovement() {
   }
 }
 
+function checkCollide(obj1, obj2) {
+  
+}
+
 function setup() {
   let myCanvas = createCanvas(WIDTH, HEIGHT);
   myCanvas.parent('gameContainer');
   annie = new Annie();
   ALLOBJECTS.push(annie);
+  dirt = new Dirtpile();
+  ALLOBJECTS.push(dirt);
 }
 
 function draw() {
   background(255, 255, 255);
 
   annieMovement();
+  checkCollide(annie, dirt);
 
   for(let obj of ALLOBJECTS) {
     obj.render();
