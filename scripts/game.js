@@ -22,6 +22,11 @@ class Dirtpile {
     rect(this.x, this.y, this.width, this.height);
   }
 
+  newLocation() {
+    this.x = randInclusive(0, WIDTH-30);
+    this.y = randInclusive(0,HEIGHT-30);
+  }
+
 }
 
 class Annie {
@@ -73,8 +78,11 @@ function annieMovement() {
   }
 }
 
-function checkCollide(obj1, obj2) {
-  
+function checkAnnieDirtCollide() {
+  let hit = collideRectCircle(annie.x, annie.y, annie.width, annie.height, dirt.x, dirt.y, dirt.width, dirt.height);
+  if(hit) {
+    dirt.newLocation();
+  }
 }
 
 function setup() {
@@ -90,7 +98,7 @@ function draw() {
   background(255, 255, 255);
 
   annieMovement();
-  checkCollide(annie, dirt);
+  checkAnnieDirtCollide();
 
   for(let obj of ALLOBJECTS) {
     obj.render();
