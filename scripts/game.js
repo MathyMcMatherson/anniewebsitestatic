@@ -40,10 +40,17 @@ class Annie {
     this.y = 200;
     this.width = 25;
     this.height = 25;
+    this.lightness = 100;
+    this.color = color('hsl(16, 58%, ' + this.lightness + '%)');
+  }
+
+  updateColor(value) {
+    this.lightness -= value;
+    this.color = color('hsl(16, 58%, ' + this.lightness + '%)');
   }
 
   render() {
-    fill('white');
+    fill(this.color);
     ellipse(this.x, this.y, this.width, this.height);
   }
 
@@ -96,6 +103,7 @@ function checkAnnieDirtCollide() {
   if(hit) {
     dirt.newLocation();
     score++;
+    annie.updateColor(5);
   }
 }
 
