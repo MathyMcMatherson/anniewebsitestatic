@@ -5,13 +5,45 @@ const NAVWIDTH = WIDTH;
 const NAVHEIGHT = 50;
 const GAMEWIDTH = WIDTH;
 const GAMEHEIGHT = HEIGHT - NAVHEIGHT;
-let ALLOBJECTS = [];
+let ENEMIES = [];
 let annie;
 let dirt;
 let score = 0;
 
 function randInclusive(a, b) {
   return Math.floor(Math.random() * (b-a + 1)) + a;
+}
+
+class Water {
+
+  constructor() {
+    this.radius = 50;
+    this.x = randInclusive(0, GAMEWIDTH-30);
+    this.y = randInclusive(NAVHEIGHT,GAMEHEIGHT-30);
+  }
+
+  render() {
+    if(this.radius > 0) {
+      fill('blue');
+      ellipse(this.x, this.y, this.radius, this.radius);
+      this.radius -= 0.5;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkCollide(a) {
+    let hit = collideCircleCircle(this.x, this.y, this.radius, a.x, a.y, a.radius);
+    if(hit) {
+      a.reset();
+      this.radius = 0;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
 
 class Dirtpile {
@@ -25,6 +57,7 @@ class Dirtpile {
   render() {
     fill('brown');
     rect(this.x, this.y, this.width, this.height);
+    return true;
   }
 
   newLocation() {
@@ -38,8 +71,7 @@ class Annie {
   constructor() {
     this.x = 200;
     this.y = 200;
-    this.width = 25;
-    this.height = 25;
+    this.radius = 25;
     this.lightness = 100;
     this.color = color('hsl(16, 58%, ' + this.lightness + '%)');
   }
@@ -51,7 +83,8 @@ class Annie {
 
   render() {
     fill(this.color);
-    ellipse(this.x, this.y, this.width, this.height);
+    ellipse(this.x, this.y, this.radius, this.radius);
+    return true;
   }
 
   moveLeft() {
@@ -78,6 +111,12 @@ class Annie {
     }
   }
 
+  reset() {
+    score = 0;
+    this.lightness = 100;
+    this.color = color('hsl(16, 58%, ' + this.lightness + '%)');
+  }
+
 }
 
 function annieMovement() {
@@ -99,11 +138,11 @@ function annieMovement() {
 }
 
 function checkAnnieDirtCollide() {
-  let hit = collideRectCircle(dirt.x, dirt.y, dirt.width, dirt.height, annie.x, annie.y, annie.width, annie.height);
+  let hit = collideRectCircle(dirt.x, dirt.y, dirt.width, dirt.height, annie.x, annie.y, annie.radius, annie.radius);
   if(hit) {
     dirt.newLocation();
-    score++;
     annie.updateColor(5);
+    score++;
   }
 }
 
@@ -115,23 +154,48 @@ function drawNavBar() {
   text("Score: " + score, 0, 0, NAVWIDTH, NAVHEIGHT);
 }
 
+function generateWater() {
+    if(randInclusive(0, 50) == 1) {
+       w = new Water();
+       ENEMIES.push(w);
+    }
+}
+
+function renderAll() {
+  annie.render();
+  dirt.render();
+  for(let i = ENEMIES.length - 1; i >= 0; i--) {
+    let obj = ENEMIES[i];
+    if(!obj.render()) {
+        ENEMIES.splice(i, 1);
+    }
+  }
+}
+
+function checkAnnieEnemiesCollide() {
+    for(let i = ENEMIES.length - 1; i >= 0; i--) {
+        let obj = ENEMIES[i];
+        if(obj.checkCollide(annie)) {
+          ENEMIES.splice(i, 1);
+        }
+    }
+}
+
 function setup() {
   let myCanvas = createCanvas(WIDTH, HEIGHT);
   myCanvas.parent('gameContainer');
   annie = new Annie();
-  ALLOBJECTS.push(annie);
   dirt = new Dirtpile();
-  ALLOBJECTS.push(dirt);
 }
 
 function draw() {
   background(255, 255, 255);
   drawNavBar();
+  generateWater();
 
   annieMovement();
   checkAnnieDirtCollide();
+  checkAnnieEnemiesCollide();
 
-  for(let obj of ALLOBJECTS) {
-    obj.render();
-  }
+  renderAll();
 }
