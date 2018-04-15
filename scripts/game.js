@@ -48,19 +48,27 @@ class Annie {
   }
 
   moveLeft() {
-    this.x -= MOVEDIST;
+    if(this.x - MOVEDIST > 0) {
+        this.x -= MOVEDIST;
+    }
   }
 
   moveRight() {
-    this.x += MOVEDIST;
+    if(this.x + MOVEDIST < GAMEWIDTH) {
+      this.x += MOVEDIST;
+    }
   }
 
   moveUp() {
-    this.y -= MOVEDIST;
+    if(this.y - MOVEDIST > NAVHEIGHT) {
+        this.y -= MOVEDIST;
+    }
   }
 
   moveDown() {
-    this.y += MOVEDIST;
+    if(this.y + MOVEDIST < NAVHEIGHT + GAMEHEIGHT) {
+      this.y += MOVEDIST;
+    }
   }
 
 }
