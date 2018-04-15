@@ -1,9 +1,14 @@
 const MOVEDIST = 10;
 const WIDTH = 800;
 const HEIGHT = 450;
+const NAVWIDTH = WIDTH;
+const NAVHEIGHT = 50;
+const GAMEWIDTH = WIDTH;
+const GAMEHEIGHT = HEIGHT - NAVHEIGHT;
 let ALLOBJECTS = [];
 let annie;
 let dirt;
+let score = 0;
 
 function randInclusive(a, b) {
   return Math.floor(Math.random() * (b-a + 1)) + a;
@@ -13,8 +18,8 @@ class Dirtpile {
   constructor() {
     this.width = 30;
     this.height = 30;
-    this.x = randInclusive(0, WIDTH-30);
-    this.y = randInclusive(0,HEIGHT-30);
+    this.x = randInclusive(0, GAMEWIDTH-30);
+    this.y = randInclusive(NAVHEIGHT,GAMEHEIGHT-30);
   }
 
   render() {
@@ -24,7 +29,7 @@ class Dirtpile {
 
   newLocation() {
     this.x = randInclusive(0, WIDTH-30);
-    this.y = randInclusive(0,HEIGHT-30);
+    this.y = randInclusive(NAVHEIGHT,GAMEHEIGHT-30);
   }
 
 }
@@ -82,7 +87,16 @@ function checkAnnieDirtCollide() {
   let hit = collideRectCircle(dirt.x, dirt.y, dirt.width, dirt.height, annie.x, annie.y, annie.width, annie.height);
   if(hit) {
     dirt.newLocation();
+    score++;
   }
+}
+
+function drawNavBar() {
+  fill(200, 200, 200);
+  rect(0, 0, NAVWIDTH, NAVHEIGHT);
+  fill(0, 0, 0);
+  textSize(NAVHEIGHT - 10);
+  text("Score: " + score, 0, 0, NAVWIDTH, NAVHEIGHT);
 }
 
 function setup() {
@@ -96,6 +110,7 @@ function setup() {
 
 function draw() {
   background(255, 255, 255);
+  drawNavBar();
 
   annieMovement();
   checkAnnieDirtCollide();
