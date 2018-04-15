@@ -79,7 +79,7 @@ function annieMovement() {
 }
 
 function checkAnnieDirtCollide() {
-  let hit = collideRectCircle(annie.x, annie.y, annie.width, annie.height, dirt.x, dirt.y, dirt.width, dirt.height);
+  let hit = collideRectCircle(dirt.x, dirt.y, dirt.width, dirt.height, annie.x, annie.y, annie.width, annie.height);
   if(hit) {
     dirt.newLocation();
   }
