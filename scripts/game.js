@@ -6,6 +6,7 @@ const NAVHEIGHT = 50;
 const GAMEWIDTH = WIDTH;
 const GAMEHEIGHT = HEIGHT - NAVHEIGHT;
 const WINSCORE = 10;
+const NAVOBJS = [];
 let ENEMIES = [];
 let STAGE = 0;
 let annie;
@@ -70,9 +71,10 @@ class Dirtpile {
 }
 
 class Annie {
-  constructor() {
-    this.x = 200;
-    this.y = 200;
+
+  constructor(xs, ys) {
+    this.x = xs;
+    this.y = ys;
     this.radius = 25;
     this.lightness = 100;
     this.color = color('hsl(16, 58%, ' + this.lightness + '%)');
@@ -209,6 +211,8 @@ function startScreen() {
   startButton();
   if(mouseIsPressed) {
     if(collidePointRect(mouseX, mouseY, 0, GAMEHEIGHT + NAVHEIGHT - 75, GAMEWIDTH, 75)) {
+      annie = new Annie(randInclusive(50, GAMEWIDTH - 50), randInclusive(NAVHEIGHT + 50, GAMEHEIGHT - NAVHEIGHT - 50));
+      dirt = new Dirtpile();
       STAGE++;
     }
   }
@@ -233,8 +237,6 @@ function endScreen() {
 function setup() {
   let myCanvas = createCanvas(WIDTH, HEIGHT);
   myCanvas.parent('gameContainer');
-  annie = new Annie();
-  dirt = new Dirtpile();
 }
 
 function draw() {
