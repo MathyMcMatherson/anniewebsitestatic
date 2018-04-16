@@ -5,7 +5,9 @@ const NAVWIDTH = WIDTH;
 const NAVHEIGHT = 50;
 const GAMEWIDTH = WIDTH;
 const GAMEHEIGHT = HEIGHT - NAVHEIGHT;
+const WINSCORE = 10;
 let ENEMIES = [];
+let STAGE = 0;
 let annie;
 let dirt;
 let score = 0;
@@ -143,6 +145,9 @@ function checkAnnieDirtCollide() {
     dirt.newLocation();
     annie.updateColor(5);
     score++;
+    if(score >= WINSCORE) {
+      STAGE++;
+    }
   }
 }
 
@@ -181,14 +186,25 @@ function checkAnnieEnemiesCollide() {
     }
 }
 
-function setup() {
-  let myCanvas = createCanvas(WIDTH, HEIGHT);
-  myCanvas.parent('gameContainer');
-  annie = new Annie();
-  dirt = new Dirtpile();
+function startButton() {
+  fill(100, 100, 255);
+  rect(0, GAMEHEIGHT + NAVHEIGHT - 75, GAMEWIDTH, 75);
+  fill(0, 0, 0);
+  textSize(50);
+  text("Play Game!", 0, GAMEHEIGHT + NAVHEIGHT - 75, GAMEWIDTH, 75);
 }
 
-function draw() {
+function startScreen() {
+  background(255,255, 255);
+  startButton();
+  if(mouseIsPressed) {
+    if(collidePointRect(mouseX, mouseY, 0, GAMEHEIGHT + NAVHEIGHT - 75, GAMEWIDTH, 75)) {
+      STAGE++;
+    }
+  }
+}
+
+function gameScreen() {
   background(255, 255, 255);
   drawNavBar();
   generateWater();
@@ -198,4 +214,25 @@ function draw() {
   checkAnnieEnemiesCollide();
 
   renderAll();
+}
+
+function endScreen() {
+  background(0, 0, 0);
+}
+
+function setup() {
+  let myCanvas = createCanvas(WIDTH, HEIGHT);
+  myCanvas.parent('gameContainer');
+  annie = new Annie();
+  dirt = new Dirtpile();
+}
+
+function draw() {
+  if(STAGE == 0) {
+    startScreen();
+  } else if (STAGE == 1) {
+    gameScreen();
+  } else if (STAGE == 2) {
+    endScreen();
+  }
 }
