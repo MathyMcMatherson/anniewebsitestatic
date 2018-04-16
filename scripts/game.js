@@ -194,8 +194,18 @@ function startButton() {
   text("Play Game!", 0, GAMEHEIGHT + NAVHEIGHT - 75, GAMEWIDTH, 75);
 }
 
+function directions() {
+  textSize(20);
+  fill(0, 0, 0);
+  text("You play as Annie, who starts off as a perfectly white circle", 50, 50, 600, 50);
+  text("But Annie likes to get dirty, so she tries to find the brown dirt piles", 50, 100, 600, 50);
+  text("As she does, Annie gets dirtier and dirtier. You win once Annie is filthy and needs a bath", 50, 150, 600, 50);
+  text("But watch out for the water puddles! If she runs through one, it will clean off all the dirt", 50, 225, 600, 50);
+}
+
 function startScreen() {
   background(255,255, 255);
+  directions();
   startButton();
   if(mouseIsPressed) {
     if(collidePointRect(mouseX, mouseY, 0, GAMEHEIGHT + NAVHEIGHT - 75, GAMEWIDTH, 75)) {
