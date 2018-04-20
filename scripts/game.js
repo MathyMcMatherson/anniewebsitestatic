@@ -12,6 +12,7 @@ let STAGE = 0;
 let annie;
 let dirt;
 let score = 0;
+let annieImg;
 
 function randInclusive(a, b) {
   return Math.floor(Math.random() * (b-a + 1)) + a;
@@ -231,12 +232,18 @@ function gameScreen() {
 }
 
 function endScreen() {
-  background(0, 0, 0);
+    background(255, 255, 255);
+    textSize(50);
+    fill(0, 0, 0);
+    text("YOU WON! LOOK HOW DIRTY ANNIE IS!", 0, NAVHEIGHT, GAMEWIDTH, 200);
+    image(annieImg, 0, NAVHEIGHT + 200);
 }
 
 function setup() {
   let myCanvas = createCanvas(WIDTH, HEIGHT);
   myCanvas.parent('gameContainer');
+  annieImg = loadImage('images/annie_game.jpg');
+
 }
 
 function draw() {
@@ -244,6 +251,7 @@ function draw() {
     startScreen();
   } else if (STAGE == 1) {
     gameScreen();
+    STAGE++; //REMOVE THIS LATER!
   } else if (STAGE == 2) {
     endScreen();
   }
