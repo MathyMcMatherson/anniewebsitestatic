@@ -236,13 +236,15 @@ function endScreen() {
     textSize(50);
     fill(0, 0, 0);
     text("YOU WON! LOOK HOW DIRTY ANNIE IS!", 0, NAVHEIGHT, GAMEWIDTH, 200);
-    image(annieImg, 0, NAVHEIGHT + 200);
+    scale(0.5, 0.5);
+    image(annieImg, GAMEWIDTH, NAVHEIGHT + 200);
+    scale(1, 1);
 }
 
 function setup() {
   let myCanvas = createCanvas(WIDTH, HEIGHT);
   myCanvas.parent('gameContainer');
-  annieImg = loadImage('images/annie_game.jpg');
+  annieImg = loadImage('https://mathymcmatherson.github.io/anniewebsitestatic/images/annie_game.jpg');
 
 }
 
@@ -254,5 +256,8 @@ function draw() {
     STAGE++; //REMOVE THIS LATER!
   } else if (STAGE == 2) {
     endScreen();
+    STAGE++;
+  } else if (STAGE == 3) {
+
   }
 }
