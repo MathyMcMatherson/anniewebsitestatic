@@ -262,15 +262,15 @@ function draw() {
     startScreen();
   } else if (STAGE == 1) {
     gameScreen();
-    STAGE++; //REMOVE THIS LATER!
+    //STAGE++; //REMOVE THIS LATER!
   } else if (STAGE == 2) {
     endScreen();
     STAGE++;
   } else if (STAGE == 3) {
     if(mouseIsPressed) {
-      if(collidePointRect(mouseX, mouseY, 0, 450, 300, 100)) {
-        console.log("HERE!");
-        STAGE = 0;
+      if(collidePointRect(mouseX, mouseY, 0, HEIGHT - 100, 200, 100)) {
+        annie.reset();
+        STAGE = 1;
       }
     }
   }
