@@ -13,6 +13,7 @@ let annie;
 let dirt;
 let score = 0;
 let annieImg;
+let bgImg;
 
 function randInclusive(a, b) {
   return Math.floor(Math.random() * (b-a + 1)) + a;
@@ -220,7 +221,7 @@ function startScreen() {
 }
 
 function gameScreen() {
-  background(255, 255, 255);
+  image(bgImg, 0, NAVHEIGHT, GAMEWIDTH, GAMEHEIGHT);
   drawNavBar();
   generateWater();
 
@@ -254,7 +255,7 @@ function setup() {
   let myCanvas = createCanvas(WIDTH, HEIGHT);
   myCanvas.parent('gameContainer');
   annieImg = loadImage('https://mathymcmatherson.github.io/anniewebsitestatic/images/annie_game.jpg');
-
+  bgImg = loadImage('https://mathymcmatherson.github.io/anniewebsitestatic/images/grassbg.png');
 }
 
 function draw() {
