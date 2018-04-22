@@ -236,10 +236,19 @@ function endScreen() {
     textSize(50);
     fill(0, 0, 0);
     text("YOU WON! LOOK HOW DIRTY ANNIE IS!", 0, NAVHEIGHT, GAMEWIDTH, 200);
+    //sets scale to 0.5, which multiplies global scale factor by 0.5
     scale(0.5, 0.5);
     image(annieImg, GAMEWIDTH, NAVHEIGHT + 200);
-    scale(1, 1);
+    //sets scale to 2, which multiplies global scale factor by 2
+    //Combined with earlier 0.5 scale, this will reset back to 1
+    scale(2, 2);
+    fill(0, 0, 255);
+    rect(0, HEIGHT - 100, 200, 100);
+    fill(0, 0, 0);
+    text("Replay?", 0, HEIGHT - 100, 200, 100);
 }
+
+
 
 function setup() {
   let myCanvas = createCanvas(WIDTH, HEIGHT);
@@ -258,6 +267,11 @@ function draw() {
     endScreen();
     STAGE++;
   } else if (STAGE == 3) {
-
+    if(mouseIsPressed) {
+      if(collidePointRect(mouseX, mouseY, 0, 450, 300, 100)) {
+        console.log("HERE!");
+        STAGE = 0;
+      }
+    }
   }
 }
