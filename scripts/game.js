@@ -5,7 +5,7 @@ const NAVWIDTH = WIDTH;
 const NAVHEIGHT = 50;
 const GAMEWIDTH = WIDTH;
 const GAMEHEIGHT = HEIGHT - NAVHEIGHT;
-const WINSCORE = 10;
+const WINSCORE = 12;
 const NAVOBJS = [];
 let ENEMIES = [];
 let STAGE = 0;
@@ -14,6 +14,7 @@ let dirt;
 let score = 0;
 let annieImg;
 let bgImg;
+let startWater;
 
 function randInclusive(a, b) {
   return Math.floor(Math.random() * (b-a + 1)) + a;
@@ -26,6 +27,12 @@ class Water {
     this.x = randInclusive(0, GAMEWIDTH-30);
     this.y = randInclusive(NAVHEIGHT,GAMEHEIGHT-30);
   }
+
+  setXY(xs, ys) {
+    this.x = xs;
+    this.y = ys;
+  }
+
 
   render() {
     if(this.radius > 0) {
@@ -201,16 +208,33 @@ function startButton() {
 function directions() {
   textSize(20);
   fill(0, 0, 0);
-  text("You play as Annie, who starts off as a perfectly white circle", 50, 50, 600, 50);
-  text("But Annie likes to get dirty, so she tries to find the brown dirt piles", 50, 100, 600, 50);
-  text("As she does, Annie gets dirtier and dirtier. You win once Annie is filthy and needs a bath", 50, 150, 600, 50);
-  text("But watch out for the water puddles! If she runs through one, it will clean off all the dirt", 50, 225, 600, 50);
+  text("Use the arrows on your keyboard to play as Annie, who starts off as a perfectly white circle", 50, 50, 600, 50);
+  text("But Annie likes to get dirty, so she tries to find the brown dirt piles", 50, 125, 600, 50);
+  text("As she does, Annie gets dirtier and dirtier. You win once Annie is filthy and needs a bath", 50, 175, 600, 50);
+  text("But watch out for the water puddles! If she runs through one, it will clean off all the dirt", 50, 250, 600, 50);
 }
 
 function startScreen() {
   background(255,255, 255);
   directions();
   startButton();
+  //Annie Circle
+  fill(color('hsl(16, 58%, 100%)'));
+  ellipse(700, 75, 25);
+  //DirtPile rect
+  fill('brown');
+  rect(687, 125, 25, 25);
+  //water
+  if(!startWater.render()) {
+    startWater = new Water();
+    startWater.setXY(700, 275);
+  }
+
+  //Annie Dirty Circle
+  fill(color('hsl(16, 58%, 50%)'));
+  ellipse(700, 200, 25);
+
+
   if(mouseIsPressed) {
     if(collidePointRect(mouseX, mouseY, 0, GAMEHEIGHT + NAVHEIGHT - 75, GAMEWIDTH, 75)) {
       annie = new Annie(randInclusive(50, GAMEWIDTH - 50), randInclusive(NAVHEIGHT + 50, GAMEHEIGHT - NAVHEIGHT - 50));
@@ -256,6 +280,8 @@ function setup() {
   myCanvas.parent('gameContainer');
   annieImg = loadImage('https://mathymcmatherson.github.io/anniewebsitestatic/images/annie_game.jpg');
   bgImg = loadImage('https://mathymcmatherson.github.io/anniewebsitestatic/images/grassbg.png');
+  startWater = new Water();
+  startWater.setXY(700, 275);
 }
 
 function draw() {
