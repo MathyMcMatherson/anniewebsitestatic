@@ -1,58 +1,29 @@
+<!DOCTYPE html>
 <html>
-<head>
-<!-- CSS -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<link rel="stylesheet" href="css/styles.css" />
-
-<!-- JS -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="scripts/scripts.js"></script>
-
-
-</head>
-<body>
-	<nav>
-	<div class="nav-wrapper">
-		<div class="container">
-			<a href="#" class="brand-logo">Annie's Website</a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="resume.html">Resume</a></li>
-				<li><a href="chat.html">Chat</a></li>
-				<li><a href="map.html">Walks</a></li>
-				<li><a href="game.html">Game</a></li>
-				<li><a href="vr.html">VR</a></li>
-			</ul>
-		</div>
-	</div>
-</nav>
-
-<main>
-	<div class="container">
-		<h1>VR</h1>
-	</div>
-</main>
-
-<footer class="page-footer">
-
-		<!---
-		<div class="container">
-	    <div class="row">
-	      <div class="col l6 s12">
-	        <h5 class="white-text">Footer Content</h5>
-	        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-	      </div>
-	    </div>
-	  </div>
-		--->
-	  <div class="footer-copyright">
-	    <div class="container">
-	    © 2018 Annie Dog LLC
-	    </div>
-	  </div>
-	</footer>
-
-</body>
+  <head>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+		<a-entity id="Annie" position="0 -4 -6">
+			<a-entity id="body" position="0 2 0">
+				<a-box position="0 0 0" color="#FF784C" width="2" height="2" depth="4"></a-box>
+			</a-entity>
+			<a-entity id="legs" position="0 0 0">
+				<a-box width="0.5" height="2" depth="0.5" color="#4444FF" position="-0.75 0 1.75"></a-box>
+				<a-box width="0.5" height="2" depth="0.5" color="#4444FF" position="0.75 0 1.75"></a-box>
+				<a-box width="0.5" height="2" depth="0.5" color="#4444FF" position="-0.75 0 -1.75"></a-box>
+				<a-box width="0.5" height="2" depth="0.5" color="#4444FF" position="0.75 0 -1.75"></a-box>
+			</a-entity>
+			<a-entity id="head" position="0 4 0">
+				<a-box position="0 0 1.5" color="#44FF44" width="2" height="2" depth="2"></a-box>
+				<a-entity id="ears" position="0 1.25 2.25">
+					<a-box position="-0.75 0 0" color="#FFFF44" width="0.5" height="0.5" depth="0.5"></a-box>
+					<a-box position="0.75 0 0" color="#FFFF44" width="0.5" height="0.5" depth="0.5"></a-box>
+				</a-entity>
+			</a-entity>
+		</a-entity>
+		<a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+  </body>
 </html>
