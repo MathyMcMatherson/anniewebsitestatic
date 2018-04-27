@@ -17,29 +17,34 @@
             annieEls.forEach(function(elt) {
               elt.setAttribute('color', '#4444FF');
             });
+            rotateAnnie();
           });
           el.addEventListener('mouseenter', function() {
-            let cam = document.querySelector("#camera");
-            let camPos = cam.getAttribute('position');
-            let annie = document.querySelector("#Annie");
-            let anniePos = annie.getAttribute('position');
-            let annieRot = annie.getAttribute('rotation');
-            let xRot = camPos.x - anniePos.x;
-            let zRot = camPos.z - anniePos.z;
-            let rot = Math.atan(xRot / zRot);
-            //console.log("x's: " + xRot);
-            //console.log("z's: " + zRot);
-            rot = (rot * 180) / Math.PI;
-            //console.log('original rot: ' + rot);
-            if(zRot < 0) {
-              rot = -180 + rot;
-            }
-            //console.log('new rot: ' + rot);
-            //console.log("");
-            annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
+            rotateAnnie();
           });
         }
       });
+
+      function rotateAnnie() {
+        let cam = document.querySelector("#camera");
+        let camPos = cam.getAttribute('position');
+        let annie = document.querySelector("#Annie");
+        let anniePos = annie.getAttribute('position');
+        let annieRot = annie.getAttribute('rotation');
+        let xRot = camPos.x - anniePos.x;
+        let zRot = camPos.z - anniePos.z;
+        let rot = Math.atan(xRot / zRot);
+        //console.log("x's: " + xRot);
+        //console.log("z's: " + zRot);
+        rot = (rot * 180) / Math.PI;
+        //console.log('original rot: ' + rot);
+        if(zRot < 0) {
+          rot = -180 + rot;
+        }
+        //console.log('new rot: ' + rot);
+        //console.log("");
+        annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
+      }
     </script>
   </head>
   <body>
