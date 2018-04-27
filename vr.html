@@ -10,8 +10,20 @@
 				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 0" width="2" height="2" depth="4"></a-box>
 			</a-entity>
 			<a-entity id="legs" position="0 0 0">
-				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2" depth="0.5" position="-0.75 0 1.75"></a-box>
-				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2" depth="0.5" position="0.75 0 1.75"></a-box>
+				<a-entity position="-0.75 0 1.75">
+					<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2" depth="0.5" position="0 0 0"></a-box>
+          <a-animation attribute="rotation"
+								 dur="2000"
+								 direction="alternate"
+								 to="360 0 0"
+								 repeat="indefinite"
+								 easing="linear"></a-animation>
+
+				</a-entity>
+
+				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2" depth="0.5" position="0.75 0 1.75">
+
+				</a-box>
 				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2" depth="0.5" position="-0.75 0 -1.75"></a-box>
 				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2" depth="0.5" position="0.75 0 -1.75"></a-box>
 			</a-entity>
