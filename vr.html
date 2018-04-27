@@ -2,16 +2,22 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script>
+      AFRAME.registerComponent('follow-on-click', {
+        init: function () {
+          var el = this.el;
+          el.addEventListener('click', function () {
+            el.setAttribute('color', '#4444FF');
+          });
+        }
+      });
+    </script>
   </head>
   <body>
     <a-scene>
       <!-- START CAMERA -->
     <a-entity camera="active: true" look-controls wasd-controls position="0 1.6 0" data-aframe-default-camera>
-      <a-entity cursor="fuse: true; fuseTimeout: 500"
-            position="0 -3 -5"
-            geometry="primitive: box; width: 2; height: 2; depth: 2"
-            material="color: black; shader: flat">
-      </a-entity>
+      <a-cursor></a-cursor><
     </a-entity>
     <!-- END CAMERA -->
 
@@ -19,7 +25,7 @@
 		<a-entity id="Annie" position="0 -4 -6">
       <!-- START BODY -->
 			<a-entity id="body" position="0 2 0">
-				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 0" width="2" height="2" depth="4"></a-box>
+				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 0" width="2" height="2" depth="4" follow-on-click></a-box>
 			</a-entity>
       <!-- END BODY -->
       <!-- START LEGS -->
@@ -76,7 +82,7 @@
       <!-- END LEGS -->
       <!-- START HEAD -->
 			<a-entity id="head" position="0 4 0">
-				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 1.5" width="2" height="2" depth="2"></a-box>
+				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 1.5" width="2" height="2" depth="2" follow-on-click></a-box>
         <!-- START EARS -->
 				<a-entity id="ears" position="0 1.25 2.25">
 					<a-box position="-0.75 0 0" color="#444444" width="0.5" height="0.5" depth="0.5"></a-box>
