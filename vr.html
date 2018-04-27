@@ -5,8 +5,12 @@
     <script>
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
-          var el = this.el;
+          let el = this.el;
           el.addEventListener('click', function () {
+            let cam = document.querySelector("#camera");
+            let posObj = cam.getAttribute('position');
+            var annie = document.querySelector("#Annie");
+            annie.setAttribute('position', {x: posObj.x, y: posObj.y - 4, z: posObj.z - 6});
             var annieEls = document.querySelectorAll(".AnnieElt");
             annieEls.forEach(function(elt) {
               elt.setAttribute('color', '#4444FF');
@@ -19,7 +23,7 @@
   <body>
     <a-scene>
       <!-- START CAMERA -->
-    <a-entity camera="active: true" look-controls wasd-controls position="0 1.6 0" data-aframe-default-camera>
+    <a-entity id="camera" camera="active: true" look-controls wasd-controls position="0 0 0" data-aframe-default-camera>
       <a-cursor></a-cursor>
     </a-entity>
     <!-- END CAMERA -->
