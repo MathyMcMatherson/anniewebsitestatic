@@ -2,19 +2,42 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <!-- <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script> -->
     <script>
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
           let el = this.el;
           el.addEventListener('click', function () {
             let cam = document.querySelector("#camera");
-            let posObj = cam.getAttribute('position');
-            var annie = document.querySelector("#Annie");
-            annie.setAttribute('position', {x: posObj.x, y: posObj.y - 4, z: posObj.z - 6});
+            let camPos = cam.getAttribute('position');
+            let annie = document.querySelector("#Annie");
+            let anniePos = annie.getAttribute('position');
+            annie.setAttribute('position', {x: camPos.x, y: camPos.y - 4, z: camPos.z - 6});
             var annieEls = document.querySelectorAll(".AnnieElt");
             annieEls.forEach(function(elt) {
               elt.setAttribute('color', '#4444FF');
             });
+          });
+          el.addEventListener('mouseenter', function() {
+            let cam = document.querySelector("#camera");
+            let camPos = cam.getAttribute('position');
+            let annie = document.querySelector("#Annie");
+            let anniePos = annie.getAttribute('position');
+            let annieRot = annie.getAttribute('rotation');
+            console.log(annieRot);
+            let xRot = camPos.x - anniePos.x;
+            let zRot = camPos.z - anniePos.z;
+            let rot = Math.atan(xRot / zRot);
+            console.log("x's: " + xRot);
+            console.log("z's: " + zRot);
+            rot = (rot * 180) / Math.PI;
+            if(xRot < 0 && zRot < 0) {
+              rot = -180 + rot;
+            } else if (xRot > 0 && zRot < 0) {
+              rot = 180 - rot;
+            }
+            console.log(rot);
+            annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
           });
         }
       });
