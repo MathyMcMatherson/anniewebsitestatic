@@ -5,12 +5,23 @@
   </head>
   <body>
     <a-scene>
+      <!-- START CAMERA -->
+    <a-entity camera="active: true" look-controls wasd-controls position="0 1.6 0" data-aframe-default-camera>
+
+    </a-entity>
+    <!-- END CAMERA -->
+
+    <!-- START ANNIE -->
 		<a-entity id="Annie" position="0 -4 -6">
+      <!-- START BODY -->
 			<a-entity id="body" position="0 2 0">
 				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 0" width="2" height="2" depth="4"></a-box>
 			</a-entity>
+      <!-- END BODY -->
+      <!-- START LEGS -->
 			<a-entity id="legs" position="0 0 0">
-				<a-entity id="front-right-leg" position="-0.74 0.5 1.25">
+        <!-- START FRONT RIGHT LEG -->
+        <a-entity id="front-right-leg" position="-0.74 0.5 1.25">
 					<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2.5" depth="0.5" position="0 0 0"></a-box>
           <a-animation attribute="rotation"
 								 dur="1000"
@@ -20,7 +31,8 @@
 								 repeat="indefinite"
 								 easing="linear"></a-animation>
 				</a-entity>
-
+        <!-- END FRONT RIGHT LEG -->
+        <!-- START FRONT LEFT LEG -->
         <a-entity id="front-left-leg" position="0.74 0.5 1.25">
   				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2.5" depth="0.5" position="0 0 0"></a-box>
           <a-animation attribute="rotation"
@@ -31,6 +43,8 @@
                  repeat="indefinite"
                  easing="linear"></a-animation>
         </a-entity>
+        <!-- END FRONT LEFT LEG -->
+        <!-- START BACK RIGHT LEG -->
         <a-entity id="back-right-leg" position="-0.74 0.5 -1.25">
           <a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2.5" depth="0.5" position="0 0 0"></a-box>
           <a-animation attribute="rotation"
@@ -41,6 +55,8 @@
                  repeat="indefinite"
                  easing="linear"></a-animation>
         </a-entity>
+        <!-- END BACK RIGHT LEG -->
+        <!-- START BACK LEFT LEG -->
         <a-entity id="back-left-leg" position="0.74 0.5 -1.25">
 				      <a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" width="0.5" height="2.5" depth="0.5" position="0 0 0"></a-box>
               <a-animation attribute="rotation"
@@ -51,16 +67,25 @@
                      repeat="indefinite"
                      easing="linear"></a-animation>
         </a-entity>
-
+        <!-- END BACK LEFT LEG -->
       </a-entity>
+      <!-- END LEGS -->
+      <!-- START HEAD -->
 			<a-entity id="head" position="0 4 0">
 				<a-box src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 1.5" width="2" height="2" depth="2"></a-box>
+        <!-- START EARS -->
 				<a-entity id="ears" position="0 1.25 2.25">
 					<a-box position="-0.75 0 0" color="#444444" width="0.5" height="0.5" depth="0.5"></a-box>
 					<a-box position="0.75 0 0" color="#444444" width="0.5" height="0.5" depth="0.5"></a-box>
 				</a-entity>
+        <!-- END EARS -->
 			</a-entity>
+      <!-- END HEAD -->
 		</a-entity>
+    <!-- END ANNIE -->
+
+
+
 		<a-sky color="#ECECEC"></a-sky>
     </a-scene>
   </body>
