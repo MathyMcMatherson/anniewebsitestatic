@@ -7,7 +7,11 @@
     <a-scene>
       <!-- START CAMERA -->
     <a-entity camera="active: true" look-controls wasd-controls position="0 1.6 0" data-aframe-default-camera>
-
+      <a-entity cursor="fuse: true; fuseTimeout: 500"
+            position="0 -3 -5"
+            geometry="primitive: box; width: 2; height: 2; depth: 2"
+            material="color: black; shader: flat">
+      </a-entity>
     </a-entity>
     <!-- END CAMERA -->
 
