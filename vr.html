@@ -27,15 +27,15 @@
             let xRot = camPos.x - anniePos.x;
             let zRot = camPos.z - anniePos.z;
             let rot = Math.atan(xRot / zRot);
-            console.log("x's: " + xRot);
-            console.log("z's: " + zRot);
+            //console.log("x's: " + xRot);
+            //console.log("z's: " + zRot);
             rot = (rot * 180) / Math.PI;
-            console.log('original rot: ' + rot);
+            //console.log('original rot: ' + rot);
             if(zRot < 0) {
               rot = -180 + rot;
             }
-            console.log('new rot: ' + rot);
-            console.log("");
+            //console.log('new rot: ' + rot);
+            //console.log("");
             annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
           });
         }
@@ -51,10 +51,10 @@
     <!-- END CAMERA -->
 
     <!-- START ANNIE -->
-		<a-entity id="Annie" position="0 -4 -6">
+		<a-entity id="Annie" position="0 -4 -6" follow-on-click>
       <!-- START BODY -->
 			<a-entity id="body" position="0 2 0">
-				<a-box class="AnnieElt" src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 0" width="2" height="2" depth="4" follow-on-click></a-box>
+				<a-box class="AnnieElt" src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 0" width="2" height="2" depth="4"></a-box>
 			</a-entity>
       <!-- END BODY -->
       <!-- START LEGS -->
@@ -111,7 +111,7 @@
       <!-- END LEGS -->
       <!-- START HEAD -->
 			<a-entity id="head" position="0 4 0">
-				<a-box class="AnnieElt" src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 1.5" width="2" height="2" depth="2" follow-on-click></a-box>
+				<a-box class="AnnieElt" src="https://mathymcmatherson.github.io/anniewebsitestatic/images/cow.jpg" position="0 0 1.5" width="2" height="2" depth="2"></a-box>
         <!-- START EARS -->
 				<a-entity id="ears" position="0 1.25 2.25">
 					<a-box class="AnnieElt" position="-0.75 0 0" color="#444444" width="0.5" height="0.5" depth="0.5"></a-box>
