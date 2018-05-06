@@ -4,6 +4,10 @@
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <!-- <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script> -->
     <script>
+      //TODO: Make rotateAnnie() run on timer instead if mouse events
+      //TODO: Make Annie 'walk' to person rather than teleport - add animation
+      //TODO: Add HUD w/directions
+      //TODO: Figure out how to get Annie to be 'in front' of you when she walks to you
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
           let el = this.el;
