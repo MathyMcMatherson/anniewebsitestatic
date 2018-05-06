@@ -4,10 +4,13 @@
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <!-- <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script> -->
     <script>
-      //TODO: Make rotateAnnie() run on timer instead if mouse events
       //TODO: Make Annie 'walk' to person rather than teleport - add animation
       //TODO: Add HUD w/directions
       //TODO: Figure out how to get Annie to be 'in front' of you when she walks to you
+
+      let DEBUGTIMER = false;
+      let DEBUGANNIEROTATE = false;
+
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
           let el = this.el;
@@ -23,13 +26,21 @@
             });
             rotateAnnie();
           });
-          el.addEventListener('mouseenter', function() {
-            rotateAnnie();
-          });
+          if(!DEBUGTIMER) {
+            el.addEventListener('mouseenter', function() {
+              rotateAnnie();
+            });
+          }
         }
       });
 
+      let timerID;
+      if(DEBUGTIMER) {
+        timerID = setInterval(rotateAnnie, 100);
+      }
+
       function rotateAnnie() {
+        let rotAnim = document.querySelector("#AnnieRotationAnimation");
         let cam = document.querySelector("#camera");
         let camPos = cam.getAttribute('position');
         let annie = document.querySelector("#Annie");
@@ -47,7 +58,17 @@
         }
         //console.log('new rot: ' + rot);
         //console.log("");
-        annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
+
+        if(DEBUGANNIEROTATE) {
+          //tries to animate the rotation as a turn
+          rotAnim.setAttribute('from', annieRot.x + " " + annieRot.y + " " + annieRot.z);
+          rotAnim.setAttribute('to', annieRot.x + " " + rot + " " + annieRot.z);
+          annie.emit("startRotation");
+        } else {
+          //triggers the animation instantly, like a teleport
+          annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
+        }
+
       }
     </script>
   </head>
@@ -129,6 +150,14 @@
         <!-- END EARS -->
 			</a-entity>
       <!-- END HEAD -->
+      <!-- START ANNIE ROTATION ANIMATION -->
+      <a-animation id="AnnieRotationAnimation" attribute="rotation"
+               dur="1000"
+               easing="linear"
+               from="0 0 0"
+               to="0 0 0"
+               begin="startRotation"></a-animation>
+      <!-- END ANNIE ROTATION ANIMATION -->
 		</a-entity>
     <!-- END ANNIE -->
 
@@ -136,5 +165,17 @@
 
 		<a-sky color="#ECECEC"></a-sky>
     </a-scene>
+    <script>
+      if(DEBUGANNIEROTATE) {
+        document.querySelector("#AnnieRotationAnimation").addEventListener('animationend', function() {
+          let annie = document.querySelector("#Annie");
+          let rotAnim = document.querySelector("#AnnieRotationAnimation");
+          let finalPosStr = rotAnim.getAttribute('to').split(" ");
+          let finalPos = finalPosStr.map(x => parseFloat(x));
+          //console.log(finalPos);
+          annie.setAttribute('rotation', {x: finalPos[0], y: finalPos[1], z: finalPos[2]});
+        });
+      }
+    </script>
   </body>
 </html>
