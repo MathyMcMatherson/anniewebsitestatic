@@ -4,44 +4,51 @@
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <!-- <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script> -->
     <script>
-      //TODO: Make Annie 'walk' to person rather than teleport - add animation
-      //TODO: Add HUD w/directions
-      //TODO: Figure out how to get Annie to be 'in front' of you when she walks to you
 
       let DEBUGTIMER = false;
       let DEBUGANNIEROTATE = true;
       let midRotation = false;
+      let midMovement = false;
       let rot;
 
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
           let el = this.el;
           el.addEventListener('click', function () {
-            let cam = document.querySelector("#camera");
-            let camPos = cam.getAttribute('position');
-            let camRot = cam.getAttribute('rotation');
-            console.log(camRot);
-            let annie = document.querySelector("#Annie");
-            let anniePos = annie.getAttribute('position');
-            let annieZ = camPos.z - 6*Math.cos(camRot.y * Math.PI / 180);
-            let annieX = camPos.x - 6*Math.sin(camRot.y * Math.PI / 180);
-            annie.setAttribute('position', {x: annieX, y: camPos.y - 4, z: annieZ});
-            //annie.setAttribute('position', {x: camPos.x, y: camPos.y - 4, z: camPos.z - 6});
-            /*
-            annie.setAttribute('position', {x: camPos.x, y: camPos.y - 4, z: camPos.z - 6});
-            var annieEls = document.querySelectorAll(".AnnieElt");
-            annieEls.forEach(function(elt) {
-              elt.setAttribute('color', '#4444FF');
-            });
-            */
-            //rotateAnnie();
-          });
-
-          el.addEventListener('mouseenter', function() {
+            moveAnnie();
             rotateAnnie();
           });
         }
       });
+
+      function moveAnnie() {
+        let cam = document.querySelector("#camera");
+        let camPos = cam.getAttribute('position');
+        let camRot = cam.getAttribute('rotation');
+        console.log(camRot);
+        let annie = document.querySelector("#Annie");
+        let anniePos = annie.getAttribute('position');
+        let annieZ = camPos.z - 6*Math.cos(camRot.y * Math.PI / 180);
+        let annieX = camPos.x - 6*Math.sin(camRot.y * Math.PI / 180);
+
+        if(!midMovement) {
+          let animationBlock = document.createElement("a-animation");
+          animationBlock.setAttribute("id", "AnnieMovementAnimation");
+          animationBlock.setAttribute("attribute", "position");
+          animationBlock.setAttribute("dur", "1000");
+          animationBlock.setAttribute("easing", "linear");
+          animationBlock.setAttribute("from", `${anniePos.x} ${anniePos.y} ${anniePos.z}`);
+          animationBlock.setAttribute("to", `${annieX} ${camPos.y - 4} ${annieZ}`);
+          annie.appendChild(animationBlock);
+          midMovement = true;
+          setTimeout(function() {
+            midMovement = false;
+            let annie = document.querySelector("#Annie");
+            let anim = document.querySelector("#AnnieMovementAnimation");
+            annie.removeChild(anim);
+          }, 1000);
+        }
+      }
 
       function rotateAnnie() {
         //let rotAnim = document.querySelector("#AnnieRotationAnimation");
@@ -60,13 +67,6 @@
         if(zRot < 0) {
           rot = -180 + rot;
         }
-
-        let animationStr = `<a-animation id="AnnieRotationAnimation" attribute="rotation"
-                 dur="1000"
-                 easing="linear"
-                 from="${annieRot.x} ${annieRot.y} ${annieRot.z}"
-                 to="${annieRot.x} ${rot} ${annieRot.z}">
-                 </a-animation>`
 
         //console.log('new rot: ' + rot);
         //console.log("");
