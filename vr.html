@@ -4,12 +4,8 @@
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <!-- <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script> -->
     <script>
-
-      let DEBUGTIMER = false;
-      let DEBUGANNIEROTATE = true;
       let midRotation = false;
       let midMovement = false;
-      let rot;
 
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
@@ -22,16 +18,18 @@
       });
 
       function moveAnnie() {
-        let cam = document.querySelector("#camera");
-        let camPos = cam.getAttribute('position');
-        let camRot = cam.getAttribute('rotation');
-        console.log(camRot);
-        let annie = document.querySelector("#Annie");
-        let anniePos = annie.getAttribute('position');
-        let annieZ = camPos.z - 6*Math.cos(camRot.y * Math.PI / 180);
-        let annieX = camPos.x - 6*Math.sin(camRot.y * Math.PI / 180);
-
+        //Check that I'm not already moving
         if(!midMovement) {
+          //Do some math!
+          let cam = document.querySelector("#camera");
+          let camPos = cam.getAttribute('position');
+          let camRot = cam.getAttribute('rotation');
+          console.log(camRot);
+          let annie = document.querySelector("#Annie");
+          let anniePos = annie.getAttribute('position');
+          let annieZ = camPos.z - 6*Math.cos(camRot.y * Math.PI / 180);
+          let annieX = camPos.x - 6*Math.sin(camRot.y * Math.PI / 180);
+          //Create the animation block in JS
           let animationBlock = document.createElement("a-animation");
           animationBlock.setAttribute("id", "AnnieMovementAnimation");
           animationBlock.setAttribute("attribute", "position");
@@ -39,69 +37,61 @@
           animationBlock.setAttribute("easing", "linear");
           animationBlock.setAttribute("from", `${anniePos.x} ${anniePos.y} ${anniePos.z}`);
           animationBlock.setAttribute("to", `${annieX} ${camPos.y - 4} ${annieZ}`);
+          //Add the block to the Annie a-element, which also immediately triggrers the animation
           annie.appendChild(animationBlock);
+          //use my variable to say that I'm now moving
           midMovement = true;
+          //use a timer that's set to the same duration as the animation
           setTimeout(function() {
+            //stop moving
             midMovement = false;
             let annie = document.querySelector("#Annie");
             let anim = document.querySelector("#AnnieMovementAnimation");
+            //remove the animation from Annie a-element so a new one can be added later
             annie.removeChild(anim);
           }, 1000);
         }
       }
 
       function rotateAnnie() {
-        //let rotAnim = document.querySelector("#AnnieRotationAnimation");
-        let cam = document.querySelector("#camera");
-        let camPos = cam.getAttribute('position');
-        let annie = document.querySelector("#Annie");
-        let anniePos = annie.getAttribute('position');
-        let annieRot = annie.getAttribute('rotation');
-        let xRot = camPos.x - anniePos.x;
-        let zRot = camPos.z - anniePos.z;
-        rot = Math.atan(xRot / zRot);
-        //console.log("x's: " + xRot);
-        //console.log("z's: " + zRot);
-        rot = (rot * 180) / Math.PI;
-        //console.log('original rot: ' + rot);
-        if(zRot < 0) {
-          rot = -180 + rot;
-        }
-
-        //console.log('new rot: ' + rot);
-        //console.log("");
-        //console.log("1");
-        if(DEBUGANNIEROTATE) {
-          //tries to animate the rotation as a turn
-          //console.log("2");
-          if(!midRotation) {
-            //console.log("3");
-            //console.log(annieRot)
-            let animationBlock = document.createElement("a-animation");
-            animationBlock.setAttribute("id", "AnnieRotationAnimation");
-            animationBlock.setAttribute("attribute", "rotation");
-            animationBlock.setAttribute("dur", "1000");
-            animationBlock.setAttribute("easing", "linear");
-            animationBlock.setAttribute("from", `${annieRot.x} ${annieRot.y} ${annieRot.z}`);
-            animationBlock.setAttribute("to", `${annieRot.x} ${rot} ${annieRot.z}`);
-            //animationBlock.setAttribute("begin", "startAnimation");
-            annie.appendChild(animationBlock);
-            midRotation = true;
-            //annie.emit("startAnimation");
-            //annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
-            //annie.emit("startRotation");
-            setTimeout(function() {
-              //console.log("4");
-              midRotation = false;
-              let annie = document.querySelector("#Annie");
-              let anim = document.querySelector("#AnnieRotationAnimation");
-              annie.removeChild(anim);
-              //annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
-            }, 1000);
+        //check that I'm not already rotating
+        if(!midRotation) {
+          //grab some elements & data
+          let cam = document.querySelector("#camera");
+          let camPos = cam.getAttribute('position');
+          let annie = document.querySelector("#Annie");
+          let anniePos = annie.getAttribute('position');
+          let annieRot = annie.getAttribute('rotation');
+          //do some math (yay trig!)
+          let xRot = camPos.x - anniePos.x;
+          let zRot = camPos.z - anniePos.z;
+          let rot = Math.atan(xRot / zRot);
+          //pesky radians
+          rot = (rot * 180) / Math.PI;
+          if(zRot < 0) {
+            rot = -180 + rot;
           }
-        } else {
-          //triggers the animation instantly, like a teleport
-          annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
+          //create the animation block
+          let animationBlock = document.createElement("a-animation");
+          animationBlock.setAttribute("id", "AnnieRotationAnimation");
+          animationBlock.setAttribute("attribute", "rotation");
+          animationBlock.setAttribute("dur", "1000");
+          animationBlock.setAttribute("easing", "linear");
+          animationBlock.setAttribute("from", `${annieRot.x} ${annieRot.y} ${annieRot.z}`);
+          animationBlock.setAttribute("to", `${annieRot.x} ${rot} ${annieRot.z}`);
+          //add the block to Annie, which automatically triggers the animation
+          annie.appendChild(animationBlock);
+          //now I'm rotating
+          midRotation = true;
+          //set a timer to the same length as the animation
+          setTimeout(function() {
+            //no longer rotating
+            midRotation = false;
+            let annie = document.querySelector("#Annie");
+            let anim = document.querySelector("#AnnieRotationAnimation");
+            //remove the animation block from Annie so a new one can be added later
+            annie.removeChild(anim);
+          }, 1000);
         }
 
       }
@@ -192,17 +182,5 @@
 
 		<a-sky color="#ECECEC"></a-sky>
     </a-scene>
-    <script>
-      /*if(DEBUGANNIEROTATE) {
-        document.querySelector("#AnnieRotationAnimation").addEventListener('animationend', function() {
-          let annie = document.querySelector("#Annie");
-          let rotAnim = document.querySelector("#AnnieRotationAnimation");
-          let finalPosStr = rotAnim.getAttribute('to').split(" ");
-          let finalPos = finalPosStr.map(x => parseFloat(x));
-          //console.log(finalPos);
-          annie.setAttribute('rotation', {x: finalPos[0], y: finalPos[1], z: finalPos[2]});
-        });
-      }*/
-    </script>
   </body>
 </html>
