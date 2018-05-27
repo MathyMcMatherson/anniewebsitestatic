@@ -9,7 +9,9 @@
       //TODO: Figure out how to get Annie to be 'in front' of you when she walks to you
 
       let DEBUGTIMER = false;
-      let DEBUGANNIEROTATE = false;
+      let DEBUGANNIEROTATE = true;
+      let midRotation = false;
+      let rot;
 
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
@@ -40,7 +42,7 @@
       }
 
       function rotateAnnie() {
-        let rotAnim = document.querySelector("#AnnieRotationAnimation");
+        //let rotAnim = document.querySelector("#AnnieRotationAnimation");
         let cam = document.querySelector("#camera");
         let camPos = cam.getAttribute('position');
         let annie = document.querySelector("#Annie");
@@ -48,7 +50,7 @@
         let annieRot = annie.getAttribute('rotation');
         let xRot = camPos.x - anniePos.x;
         let zRot = camPos.z - anniePos.z;
-        let rot = Math.atan(xRot / zRot);
+        rot = Math.atan(xRot / zRot);
         //console.log("x's: " + xRot);
         //console.log("z's: " + zRot);
         rot = (rot * 180) / Math.PI;
@@ -56,14 +58,45 @@
         if(zRot < 0) {
           rot = -180 + rot;
         }
+
+        let animationStr = `<a-animation id="AnnieRotationAnimation" attribute="rotation"
+                 dur="1000"
+                 easing="linear"
+                 from="${annieRot.x} ${annieRot.y} ${annieRot.z}"
+                 to="${annieRot.x} ${rot} ${annieRot.z}">
+                 </a-animation>`
+
         //console.log('new rot: ' + rot);
         //console.log("");
-
+        //console.log("1");
         if(DEBUGANNIEROTATE) {
           //tries to animate the rotation as a turn
-          rotAnim.setAttribute('from', annieRot.x + " " + annieRot.y + " " + annieRot.z);
-          rotAnim.setAttribute('to', annieRot.x + " " + rot + " " + annieRot.z);
-          annie.emit("startRotation");
+          //console.log("2");
+          if(!midRotation) {
+            //console.log("3");
+            console.log(annieRot)
+            let animationBlock = document.createElement("a-animation");
+            animationBlock.setAttribute("id", "AnnieRotationAnimation");
+            animationBlock.setAttribute("attribute", "rotation");
+            animationBlock.setAttribute("dur", "1000");
+            animationBlock.setAttribute("easing", "linear");
+            animationBlock.setAttribute("from", `${annieRot.x} ${annieRot.y} ${annieRot.z}`);
+            animationBlock.setAttribute("to", `${annieRot.x} ${rot} ${annieRot.z}`);
+            //animationBlock.setAttribute("begin", "startAnimation");
+            annie.appendChild(animationBlock);
+            midRotation = true;
+            //annie.emit("startAnimation");
+            //annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
+            //annie.emit("startRotation");
+            setTimeout(function() {
+              //console.log("4");
+              midRotation = false;
+              let annie = document.querySelector("#Annie");
+              let anim = document.querySelector("#AnnieRotationAnimation");
+              annie.removeChild(anim);
+              //annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
+            }, 1000);
+          }
         } else {
           //triggers the animation instantly, like a teleport
           annie.setAttribute('rotation', {x: annieRot.x, y: rot, z: annieRot.z});
@@ -150,14 +183,6 @@
         <!-- END EARS -->
 			</a-entity>
       <!-- END HEAD -->
-      <!-- START ANNIE ROTATION ANIMATION -->
-      <a-animation id="AnnieRotationAnimation" attribute="rotation"
-               dur="1000"
-               easing="linear"
-               from="0 0 0"
-               to="0 0 0"
-               begin="startRotation"></a-animation>
-      <!-- END ANNIE ROTATION ANIMATION -->
 		</a-entity>
     <!-- END ANNIE -->
 
@@ -166,7 +191,7 @@
 		<a-sky color="#ECECEC"></a-sky>
     </a-scene>
     <script>
-      if(DEBUGANNIEROTATE) {
+      /*if(DEBUGANNIEROTATE) {
         document.querySelector("#AnnieRotationAnimation").addEventListener('animationend', function() {
           let annie = document.querySelector("#Annie");
           let rotAnim = document.querySelector("#AnnieRotationAnimation");
@@ -175,7 +200,7 @@
           //console.log(finalPos);
           annie.setAttribute('rotation', {x: finalPos[0], y: finalPos[1], z: finalPos[2]});
         });
-      }
+      }*/
     </script>
   </body>
 </html>
