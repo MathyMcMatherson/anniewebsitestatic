@@ -28,18 +28,12 @@
             });
             rotateAnnie();
           });
-          if(!DEBUGTIMER) {
-            el.addEventListener('mouseenter', function() {
-              rotateAnnie();
-            });
-          }
+
+          el.addEventListener('mouseenter', function() {
+            rotateAnnie();
+          });
         }
       });
-
-      let timerID;
-      if(DEBUGTIMER) {
-        timerID = setInterval(rotateAnnie, 100);
-      }
 
       function rotateAnnie() {
         //let rotAnim = document.querySelector("#AnnieRotationAnimation");
