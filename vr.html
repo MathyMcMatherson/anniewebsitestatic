@@ -19,14 +19,22 @@
           el.addEventListener('click', function () {
             let cam = document.querySelector("#camera");
             let camPos = cam.getAttribute('position');
+            let camRot = cam.getAttribute('rotation');
+            console.log(camRot);
             let annie = document.querySelector("#Annie");
             let anniePos = annie.getAttribute('position');
+            let annieZ = camPos.z - 6*Math.cos(camRot.y * Math.PI / 180);
+            let annieX = camPos.x - 6*Math.sin(camRot.y * Math.PI / 180);
+            annie.setAttribute('position', {x: annieX, y: camPos.y - 4, z: annieZ});
+            //annie.setAttribute('position', {x: camPos.x, y: camPos.y - 4, z: camPos.z - 6});
+            /*
             annie.setAttribute('position', {x: camPos.x, y: camPos.y - 4, z: camPos.z - 6});
             var annieEls = document.querySelectorAll(".AnnieElt");
             annieEls.forEach(function(elt) {
               elt.setAttribute('color', '#4444FF');
             });
-            rotateAnnie();
+            */
+            //rotateAnnie();
           });
 
           el.addEventListener('mouseenter', function() {
@@ -68,7 +76,7 @@
           //console.log("2");
           if(!midRotation) {
             //console.log("3");
-            console.log(annieRot)
+            //console.log(annieRot)
             let animationBlock = document.createElement("a-animation");
             animationBlock.setAttribute("id", "AnnieRotationAnimation");
             animationBlock.setAttribute("attribute", "rotation");
