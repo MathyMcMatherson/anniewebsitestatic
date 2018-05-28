@@ -6,6 +6,9 @@
     <script>
       let midRotation = false;
       let midMovement = false;
+      let MOVETIME = 1000;
+      let WAITTIME = 5000;
+      let poopsRemoved = 0;
 
       AFRAME.registerComponent('follow-on-click', {
         init: function () {
@@ -17,6 +20,107 @@
         }
       });
 
+      AFRAME.registerComponent('clean-poop', {
+        init: function () {
+          let el = this.el;
+          el.addEventListener('click', function () {
+            let cam = document.querySelector("#camera");
+            let camPos = cam.getAttribute('position');
+            let poopPos = el.getAttribute('position');
+            if(Math.sqrt((camPos.x - poopPos.x)**2 + (camPos.z - poopPos.z)**2) <= 7) {
+              poopsRemoved++;
+              //<a-entity id="poopText" text="value: 0; color: black;" position="0.85 0.4 -0.5"></a-entity>
+              let text = document.querySelector("#poopText");
+              text.setAttribute("text", `value: ${poopsRemoved}; color: black;`);
+              let scene = document.querySelector("#annieScene");
+              scene.removeChild(el);
+            }
+          });
+        }
+      });
+
+      function newPoop() {
+        let origPoop = document.querySelector("#poop");
+        let newPoop = origPoop.cloneNode(true);
+
+        let annie = document.querySelector("#Annie");
+        let anniePos = annie.getAttribute('position');
+
+        newPoop.setAttribute("position", `${anniePos.x} ${anniePos.y} ${anniePos.z}`);
+        let scene = document.querySelector("#annieScene");
+        scene.appendChild(newPoop);
+
+      }
+
+      function randInclusive(a, b) {
+        return Math.random() * (b-a + 1) + a;
+      }
+      function randInclusiveInt(a, b) {
+        return Math.floor(Math.random() * (b-a + 1)) + a;
+      }
+
+      function annieToRandomPosition() {
+        //Grab some data
+        let annie = document.querySelector("#Annie");
+        let anniePos = annie.getAttribute('position');
+        let annieRot = annie.getAttribute('rotation');
+        //Create random coordinates
+        let annieZ = randInclusive(-1.5, 1.5) * 10;
+        let annieX = randInclusive(-1.5, 1.5) * 10;
+
+        //generate the rotation value
+        let xRot = annieX - anniePos.x;
+        let zRot = annieZ - anniePos.z;
+        let rot = Math.atan(xRot / zRot);
+        //pesky radians
+        rot = (rot * 180) / Math.PI;
+        if(zRot < 0) {
+          rot = -180 + rot;
+        }
+
+        //set random time for animation
+        MOVETIME = randInclusiveInt(10, 50) * 100;
+
+        //create the Rotation animation block
+        let rotateBlock = document.createElement("a-animation");
+        rotateBlock.setAttribute("id", "AnnieRotationAnimation");
+        rotateBlock.setAttribute("attribute", "rotation");
+        rotateBlock.setAttribute("dur", `${MOVETIME}`);
+        rotateBlock.setAttribute("easing", "linear");
+        rotateBlock.setAttribute("from", `${annieRot.x} ${annieRot.y} ${annieRot.z}`);
+        rotateBlock.setAttribute("to", `${annieRot.x} ${rot} ${annieRot.z}`);
+        //add the block to Annie, which automatically triggers the animation
+        annie.appendChild(rotateBlock);
+
+        //Create the Movement animation block
+        let moveBlock = document.createElement("a-animation");
+        moveBlock.setAttribute("id", "AnnieMovementAnimation");
+        moveBlock.setAttribute("attribute", "position");
+        moveBlock.setAttribute("dur", `${MOVETIME}`);
+        moveBlock.setAttribute("easing", "linear");
+        moveBlock.setAttribute("from", `${anniePos.x} ${anniePos.y} ${anniePos.z}`);
+        moveBlock.setAttribute("to", `${annieX} -4 ${annieZ}`);
+        //Add the block to the Annie a-element, which also immediately triggrers the animation
+        annie.appendChild(moveBlock);
+
+        //use a timer that's set to the same duration as the animation
+        setTimeout(function() {
+          let annie = document.querySelector("#Annie");
+          let moveAnim = document.querySelector("#AnnieMovementAnimation");
+          let rotAnim = document.querySelector("#AnnieRotationAnimation");
+          //remove the animation from Annie a-element so a new one can be added later
+          annie.removeChild(moveAnim);
+          annie.removeChild(rotAnim);
+          WAITTIME = randInclusiveInt(20, 60) * 100;
+          setTimeout(function() {
+              if(randInclusiveInt(1, 2) == 1) {
+                  newPoop();
+              }
+              annieToRandomPosition();
+          }, WAITTIME);
+        }, MOVETIME);
+      }
+
       function moveAnnie() {
         //Check that I'm not already moving
         if(!midMovement) {
@@ -24,7 +128,6 @@
           let cam = document.querySelector("#camera");
           let camPos = cam.getAttribute('position');
           let camRot = cam.getAttribute('rotation');
-          console.log(camRot);
           let annie = document.querySelector("#Annie");
           let anniePos = annie.getAttribute('position');
           let annieZ = camPos.z - 6*Math.cos(camRot.y * Math.PI / 180);
@@ -95,13 +198,35 @@
         }
 
       }
+
+      window.onload = function () {
+        annieToRandomPosition();
+    };
+
     </script>
   </head>
   <body>
-    <a-scene>
+    <a-scene id="annieScene">
+
+      <a-assets>
+        <img id="lawnTexture" src="images/grasslight-big.jpg">
+        <img id="background" src="images/environment.jpg">
+        <img id="background2" src="images/bg2.jpg">
+      </a-assets>
+
+
       <!-- START CAMERA -->
-    <a-entity id="camera" camera="active: true" look-controls wasd-controls position="0 0 0" data-aframe-default-camera>
-      <a-cursor></a-cursor>
+    <a-entity id="camera" camera="active: true" look-controls wasd-controls="acceleration: 150" position="0 0 0" data-aframe-default-camera>
+        <a-entity text="value: Clean Up Annie's Poops!; color: black;" position="-0.35 0.4 -0.5"></a-entity>
+        <a-entity text="value: Click On The Poop To Remove It!; color: black;" position="-0.35 0.3 -0.5"></a-entity>
+        <a-entity text="value: Click On Annie to call her!; color: black;" position="-0.35 0.2 -0.5"></a-entity>
+        <a-entity geometry="primitive: plane; height: 0.4; width: 1.35" position="-0.9 0.4 -0.6"
+              material="color: white; opacity: 0.5"></a-entity>
+        <a-entity text="value: Poops Removed:; color: black;" position="0.5 0.4 -0.5"></a-entity>
+        <a-entity id="poopText" text="value: 0; color: black;" position="0.85 0.4 -0.5"></a-entity>
+        <a-entity geometry="primitive: plane; height: 0.1; width: 0.5" position="0.25 0.46 -0.6"
+              material="color: white; opacity: 0.5"></a-entity>
+        <a-cursor></a-cursor>
     </a-entity>
     <!-- END CAMERA -->
 
@@ -178,20 +303,20 @@
 		</a-entity>
     <!-- END ANNIE -->
 
-    <!-- START TENNIS BALL -->
-    <a-sphere id="testBall" color="yellow" radius="1" position="0 -4 -6">
+    <!-- START POOP -->
+    <a-sphere id="poop" color="brown" radius="1" position="0 -10 -6" clean-poop>
     </a-sphere>
-    <!-- END TENNIS BALL -->
+    <!-- END POOP -->
 
     <!-- START FLOOR -->
-    <a-plane rotation="-90 0 0" position="0 -5 0" width="100" height="100" color="#00FF00"></a-plane>
+    <a-plane material="src: #lawnTexture" rotation="-90 0 0" position="0 -5 0" width="100" height="100" color="#00FF00"></a-plane>
     <!-- END FLOOR -->
 
 
 
 
 
-		<a-sky color="#ECECEC"></a-sky>
+		<a-sky src = "#background2"></a-sky>
     </a-scene>
   </body>
 </html>
