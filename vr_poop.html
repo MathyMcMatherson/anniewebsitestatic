@@ -210,7 +210,14 @@
 
       <a-assets>
         <img id="lawnTexture" src="images/grasslight-big.jpg">
+        <img id="sky" src="images/environment.jpg">
       </a-assets>
+
+      <!-- START SKY WORKAROUND -->
+      <a-entity material="src: #sky; side: back; shader: flat" 
+                geometry="primitive: sphere; radius: 5000; segmentsWidth: 64; segmentsHeight: 32">
+      </a-entity>
+      <!-- END SKY WORKAROUND -->
 
       <!-- START CAMERA -->
     <a-entity id="camera" camera="active: true" look-controls wasd-controls="acceleration: 150" position="0 0 0" data-aframe-default-camera>
