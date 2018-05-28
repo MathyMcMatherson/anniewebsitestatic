@@ -207,6 +207,11 @@
   </head>
   <body>
     <a-scene id="annieScene">
+
+      <a-assets>
+        <img id="lawnTexture" src="images/grasslight-big.jpg">
+      </a-assets>
+
       <!-- START CAMERA -->
     <a-entity id="camera" camera="active: true" look-controls wasd-controls="acceleration: 150" position="0 0 0" data-aframe-default-camera>
       <!--<a-entity geometry="primitive: plane; height: 0.2; width: 0.2" position="0 0 -1"
@@ -299,8 +304,9 @@
     <!-- END POOP -->
 
     <!-- START FLOOR -->
-    <a-plane rotation="-90 0 0" position="0 -5 0" width="100" height="100" color="#00FF00"></a-plane>
+    <a-plane material="src: #lawnTexture" rotation="-90 0 0" position="0 -5 0" width="100" height="100" color="#00FF00"></a-plane>
     <!-- END FLOOR -->
+
 
 
 
